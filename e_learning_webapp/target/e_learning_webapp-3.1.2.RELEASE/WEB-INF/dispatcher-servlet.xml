@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:prefix="/WEB-INF/jsp/" p:suffix=".jsp" />
+	<bean id="mySessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+
+		<property name="dataSource" ref="myDataSource" />
+
+		<property name="annotatedClasses">
+
+			<list>
+
+				<value>com.elearning.webapp.Category</value>
+				<value>com.elearning.webapp.Course
+				</value>
+				<value>com.elearning.webapp.Departement
+				</value>
+				<value>com.elearning.webapp.Material
+				</value>
+				<value>com.elearning.webapp.Payment
+				</value>
+				<value>com.elearning.webapp.Person
+				</value>
+				<value>com.elearning.webapp.Role</value>
+				<value>com.elearning.webapp.Users</value>
+
+			</list>
+
+		</property>
+
+		<property name="hibernateProperties">
+
+			<props>
+
+				<prop key="hibernate.dialect"> org.hibernate.dialect.MySQLDialect</prop>
+
+				<prop key="hibernate.show_sql">true</prop>
+
+				<prop key="hibernate.hbm2ddl.auto">create</prop>
+
+			</props>
+
+		</property>
+
+	</bean>
+	<bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+
+		<property name="url" value="jdbc:mysql://localhost:3306/elearning" />
+
+		<property name="username" value="root" />
+
+		<property name="password" value="NiOrla17;/" />
+
+	</bean>
+	
+	<bean id="categoryService" class="com.elearning.webapp.service.impl.CategoryServiceImpl">
+
+		<property name="categoryServiceDao" ref="categoryServiceDao" />
+
+	</bean>
+	<bean id="categoryServiceDao"
+		class="com.elearning.webapp.service.dao.impl.CategoryServiceDAOImpl">
+
+		<property name="sessionFactory" ref="mySessionFactory" />
+
+	</bean>
+	<bean id="courseService" class="com.elearning.webapp.service.impl.CourseServiceImpl">
+
+		<property name="courseServiceDao" ref="courseServiceDao" />
+
+	</bean>
+	<bean id="courseServiceDao"
+		class="com.elearning.webapp.service.dao.impl.CourseServiceDAOImpl">
+
+		<property name="sessionFactory" ref="mySessionFactory" />
+
+	</bean>
+	<bean id="materialService" class="com.elearning.webapp.service.impl.MaterialServiceImpl">
+
+		<property name="materialServiceDao" ref="materialServiceDao" />
+
+	</bean>
+	<bean id="materialServiceDao"
+		class="com.elearning.webapp.service.dao.impl.MaterialServiceDAOImpl">
+
+		<property name="sessionFactory" ref="mySessionFactory" />
+
+	</bean>
+	<bean id="departementService"
+		class="com.elearning.webapp.service.impl.DepartementServiceImpl">
+
+		<property name="departementServiceDao" ref="DepartementServiceDao" />
+
+	</bean>
+	<bean id="departementServiceDao"
+		class="com.elearning.webapp.service.dao.impl.DepartementServiceDAOImpl">
+
+		<property name="sessionFactory" ref="mySessionFactory" />
+
+	</bean>
+	<bean id="paymentService" class="com.elearning.webapp.service.impl.PaymentServiceImpl">
+
+		<property name="paymentServiceDao" ref="paymentServiceDao" />
+
+	</bean>
+	<bean id="paymentServiceDao"
+		class="com.elearning.webapp.service.dao.impl.PaymentServiceDAOImpl">
+
+		<property name="sessionFactory" ref="mySessionFactory" />
+
+	</bean>
+	<bean id="personService" class="com.elearning.webapp.service.impl.PersonServiceImpl">
+
+		<property name="personServiceDao" ref="personServiceDao" />
+
+	</bean>
+	<bean id="personServiceDao"
+		class="com.elearning.webapp.service.dao.impl.PersonServiceDAOImpl">
+
+		<property name="sessionFactory" ref="mySessionFactory" />
+
+	</bean>
+	<bean id="roleService" class="com.elearning.webapp.service.impl.RoleServiceImpl">
+
+		<property name="roleServiceDao" ref="roleServiceDao" />
+
+	</bean>
+	<bean id="roleServiceDao"
+		class="com.elearning.webapp.service.dao.impl.RoleServiceDAOImpl">
+
+		<property name="sessionFactory" ref="mySessionFactory" />
+
+	</bean>
+	<bean id="usersService" class="com.elearning.webapp.service.impl.UsersServiceImpl">
+
+		<property name="usersServiceDao" ref="usersServiceDao" />
+
+	</bean>
+	<bean id="usersServiceDao"
+		class="com.elearning.webapp.service.dao.impl.UsersServiceDAOImpl">
+
+		<property name="sessionFactory" ref="mySessionFactory" />
+
+	</bean>
+
+
+	<context:component-scan base-package="com.elearning.webapp.controller" />
+
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
+
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
+</beans>
